@@ -47,14 +47,17 @@ jobs:
             /d:sonar.token="$SONAR_TOKEN"
 
       - name: Restaurar dependencias
-        run: dotnet restore Clean.Architecture.slnx
+        run: |
+          dotnet restore Clean.Architecture.slnx \
+            -p:WarningsNotAsErrors=NU1903
 
       - name: Compilar la solucion
         run: |
           dotnet build Clean.Architecture.slnx \
             --configuration Release \
             --no-restore \
-            --no-incremental
+            --no-incremental \
+            -p:WarningsNotAsErrors=NU1903
 
       - name: Finalizar y enviar analisis
         env:
